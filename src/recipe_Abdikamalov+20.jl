@@ -27,25 +27,6 @@ function calculate_line_profile(m, x, d, bins; kwargs...)
     return f
 end
 
-#function calculate_line_profile_binned(m, x, d, bins; kwargs...)
-    # above Nr and Nθ are control the resolution, so increase or decrease
-    # according to your own judgement
-#    _, f = lineprofile(
-#        m, 
- #       x, 
-  #      d, 
-   #     method = BinningMethod(), 
-    #    verbose = true,
-     #   bins = bins,
-      #  maxrₑ = 500.0,
-        #minrₑ = 5.0,
-        # sorry i lead you astray about sampler arg
-        # i forgot we're just using r⁻³ as emissivity :c 
-       # plane = PolarPlane(GeometricGrid(); Nr = 1500, Nθ = 1500, r_max = 500.0)
-    #)
-    #return f
-#end
-
 function run_all_parameter_combinations(m, θ, bins; kwargs...)
     x = SVector(0.0, 1000.0, deg2rad(θ), 0.0)
     @info "m = $m θ = $(θ)"
@@ -144,21 +125,3 @@ display(pp3)
 
 # put everything together
 plot(pn1, pk1, pp1, pn2, pk2, pp2, pn3, pk3, pp3, layout = grid(3, 3), size = (1100, 1100))
-
-
-
-
-# begin
-#     import Pkg; Pkg.add("JLD2")
-
-#     using JLD2
-
-#     all_data_names = [:data_n1, :data_n2, :data_n3, :data_k1, :data_k2, :data_k3, :data_p1, :data_p2, :data_p3]
-#     data_to_save = [data_n1, data_n2, data_n3, data_k1, data_k2, data_k3, data_p1, data_p2, data_p3]
-
-#     data = Dict(i => j for (i, j) in zip(all_data_names, data_to_save))
-
-#     save("binning-method-full.jld2", 
-#     data
-#     )
-# end
