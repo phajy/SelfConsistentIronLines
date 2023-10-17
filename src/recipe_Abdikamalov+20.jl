@@ -27,6 +27,22 @@ function calculate_line_profile(m, x, d, bins; kwargs...)
     return f
 end
 
+function calculate_line_profile_binned(m, x, d, bins; kwargs...)
+
+   _, f = lineprofile(
+       m, 
+       x, 
+       d, 
+       method = BinningMethod(), 
+       verbose = true,
+       bins = bins,
+       maxrₑ = 500.0,
+       minrₑ = Gradus.isco(m) + 1e-2,
+       
+    )
+    return f
+end
+
 function run_all_parameter_combinations(m, θ, bins; kwargs...)
     x = SVector(0.0, 1000.0, deg2rad(θ), 0.0)
     @info "m = $m θ = $(θ)"
@@ -36,6 +52,10 @@ function run_all_parameter_combinations(m, θ, bins; kwargs...)
     d2 = ShakuraSunyaev(m, eddington_ratio = 0.2)
     d3 = ShakuraSunyaev(m, eddington_ratio = 0.3)
     @info "0%"
+
+    # change to '_binned' if needed, eg
+    # edrat0 = @time calculate_line_profile_binned(m, x, dthin, bins; kwargs...)
+    # @info "10%"
     edrat0 = @time calculate_line_profile(m, x, dthin, bins; kwargs...)
     @info "10%"
     edrat10 = @time calculate_line_profile(m, x, d1, bins; kwargs...)
