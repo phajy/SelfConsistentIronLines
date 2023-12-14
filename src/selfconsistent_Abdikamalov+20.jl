@@ -35,7 +35,6 @@ function em_prof(m, d, model, spectrum; kwargs...)
         model,
         spectrum,
         n_samples = 10_000,
-        sampler = EvenSampler(BothHemispheres(), GoldenSpiralGenerator())
     )
     return em_prof
 end
