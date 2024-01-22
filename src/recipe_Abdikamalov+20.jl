@@ -27,21 +27,6 @@ function calculate_line_profile(m, x, d, bins; kwargs...)
     return f
 end
 
-function calculate_line_profile_binned(m, x, d, bins; kwargs...)
-
-   _, f = lineprofile(
-       m, 
-       x, 
-       d, 
-       method = BinningMethod(), 
-       verbose = true,
-       bins = bins,
-       maxrₑ = 500.0,
-       minrₑ = Gradus.isco(m) + 1e-2,
-       
-    )
-    return f
-end
 
 function run_all_parameter_combinations(m, θ, bins; kwargs...)
     x = SVector(0.0, 1000.0, deg2rad(θ), 0.0)
