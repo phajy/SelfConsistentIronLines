@@ -4,8 +4,8 @@ using Plots
 #geometric thin disc
 d = ThinDisc(0.0, Inf)
 
-m1 = JohannsenMetric(M = 1.0, a = 0.95, α13 = 0.0)
-m2 = JohannsenMetric(M = 1.0, a = 0.85, α13 = 0.97902)
+m1 = JohannsenMetric(M = 1.0, a = 0.95, α22 = 0.0)
+m2 = JohannsenMetric(M = 1.0, a = 0.85, α22 = 0.97902)
 
 # define custom bins for g
 bins = collect(range(0.1, 2.0, 300))
