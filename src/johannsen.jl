@@ -62,8 +62,36 @@ function calculate_line_profile(m, x, d, prof, bins; kwargs...)
     return f
 end
 
-edrat1 = calculate_line_profile(m1, x, d, prof1, bins)
-edrat2 = calculate_line_profile(m2, x, d, prof2, bins)
+# self-consistently calculated disc illumination profile
+# edrat1 = calculate_line_profile(m1, x, d, prof1, bins)
+# edrat2 = calculate_line_profile(m2, x, d, prof2, bins)
+
+function calculate_line_profile(m, x, d, bins; kwargs...)
+    _, f = lineprofile(
+        m,
+        x,
+        d;
+        method = TransferFunctionMethod(),
+        minrₑ = Gradus.isco(m) + 1e-2,
+        verbose = true,
+        bins = bins,
+        #minrₑ = 6.0,
+        maxrₑ = 100.0,
+        # resolution
+        numrₑ = 350,
+        Nr = 3000,
+        # abstol = 1e-10,
+        # reltol = 1e-10,
+        kwargs...,
+    )
+    return f
+end
+
+# r^-3 emissivity profile used by Johannsen (2014) - see their description just beofore their equation (38) 
+# note that lineprofile assumes emissivity goes as r^-3 by default
+edrat1 = calculate_line_profile(m1, x, d, bins)
+edrat2 = calculate_line_profile(m2, x, d, bins)
+
 
 # function min_max_scaling(data::Vector{T}) where T
 #     min_val = minimum(data)
@@ -79,7 +107,5 @@ edrat2 = calculate_line_profile(m2, x, d, prof2, bins)
 # plot(bins, scaled_edrat1, xlabel = "energy (a.u.)", ylabel = "number flux density (a.u.)", label = "a = 0.95, α13 = 0.0", title = "Scaled")
 # plot!(bins, scaled_edrat2, xlabel ="energy (a.u.)", ylabel = "number flux density (a.u.)", label = "a = 0.85, α13 = 0.97902")
 
-plot(bins, edrat1, xlabel = "energy (a.u.)", ylabel = "number flux density (a.u.)", label = "a = 0.95, α13 = 0.0", title = "Johannsen 2014 fig. 9 recipe")
-plot!(bins, edrat2, xlabel ="energy (a.u.)", ylabel = "number flux density (a.u.)", label = "a = 0.85, α13 = 0.97902")
-
-
+plot(bins, edrat1, xlabel = "energy (a.u.)", ylabel = "number flux density (a.u.)", label = "a = 0.95, α22 = 0.0", title = "Johannsen 2014 fig. 9 centre panel recipe", xlims = (0.2, 1.1))
+plot!(bins, edrat2, xlabel ="energy (a.u.)", ylabel = "number flux density (a.u.)", label = "a = 0.85, α22 = 0.97902")
