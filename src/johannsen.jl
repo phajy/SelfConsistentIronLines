@@ -65,21 +65,21 @@ end
 edrat1 = calculate_line_profile(m1, x, d, prof1, bins)
 edrat2 = calculate_line_profile(m2, x, d, prof2, bins)
 
-function min_max_scaling(data::Vector{T}) where T
-    min_val = minimum(data)
-    max_val = maximum(data)
-    scaled_data = [(x - min_val) / (max_val - min_val) for x in data]
-    return scaled_data
-end
+# function min_max_scaling(data::Vector{T}) where T
+#     min_val = minimum(data)
+#     max_val = maximum(data)
+#     scaled_data = [(x - min_val) / (max_val - min_val) for x in data]
+#     return scaled_data
+# end
 
 
-scaled_edrat1 = min_max_scaling(edrat1)
-scaled_edrat2 = min_max_scaling(edrat2)
+# scaled_edrat1 = min_max_scaling(edrat1)
+# scaled_edrat2 = min_max_scaling(edrat2)
 
-plot(bins, scaled_edrat1, xlabel = "energy (a.u.)", ylabel = "number flux density (a.u.)", label = "a = 0.95, α13 = 0.0", title = "Scaled")
-plot!(bins, scaled_edrat2, xlabel ="energy (a.u.)", ylabel = "number flux density (a.u.)", label = "a = 0.85, α13 = 0.97902")
+# plot(bins, scaled_edrat1, xlabel = "energy (a.u.)", ylabel = "number flux density (a.u.)", label = "a = 0.95, α13 = 0.0", title = "Scaled")
+# plot!(bins, scaled_edrat2, xlabel ="energy (a.u.)", ylabel = "number flux density (a.u.)", label = "a = 0.85, α13 = 0.97902")
 
-plot(bins, edrat1, xlabel = "energy (a.u.)", ylabel = "number flux density (a.u.)", label = "a = 0.95, α13 = 0.0", title = "Not scaled")
+plot(bins, edrat1, xlabel = "energy (a.u.)", ylabel = "number flux density (a.u.)", label = "a = 0.95, α13 = 0.0", title = "Johannsen 2014 fig. 9 recipe")
 plot!(bins, edrat2, xlabel ="energy (a.u.)", ylabel = "number flux density (a.u.)", label = "a = 0.85, α13 = 0.97902")
 
 
