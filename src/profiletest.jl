@@ -24,7 +24,7 @@ function run_all_parameter_combinations(m, model; kwargs...)
 
 
     # discs
-    dthin = ThinDisc(0.0, Inf)
+    dthin = ThinDisc(Gradus.isco(m), Inf)
     d1 = ShakuraSunyaev(m, eddington_ratio = 0.1)
     d2 = ShakuraSunyaev(m, eddington_ratio = 0.2)
     d3 = ShakuraSunyaev(m, eddington_ratio = 0.3)
@@ -51,7 +51,7 @@ end
 
 function plot_all(data)
     incl_text = Printf.@sprintf "h=%0.f" data.h
-    p = plot(title = _format_metric(data.metric) * incl_text, legend = :topright)
+    p = plot(title = _format_metric(data.metric) * incl_text, legend = :bottomleft, xlims = (1.0, 30.0))
     for (edd, f) in zip((0, 10, 20, 30), data.f)
         plot!(p, f, label = _format_label(edd))
     end
@@ -129,6 +129,6 @@ pp3 = plot_all(data_p3)
 display(pp3)
 
 # put everything together
-plot(pn1, pk1, pp1, pn2, pk2, pp2, pn3, pk3, pp3, layout = grid(3, 3), size = (1100, 1100))
+plot(pn3, pk3, pp3, pn2, pk2, pp2, pn1, pk1, pp1,layout = grid(3, 3), size = (1100, 1100))
 
 
