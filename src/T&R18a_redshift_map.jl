@@ -10,7 +10,10 @@ d = ShakuraSunyaev(m, eddington_ratio = 0.1)
 
 # define point function which filters geodesics that intersected the accretion disc
 # and use those to calculate redshift
-pf = ConstPointFunctions.redshift(m, x) ∘ ConstPointFunctions.filter_intersected()
+# filter the outer radius -- specify by adjusting value by gp.x[2]
+
+r_filter = Gradus.FilterPointFunction((m, gp, t) -> gp.x[2] < 30, NaN)
+pf = ConstPointFunctions.redshift(m, x) ∘ r_filter ∘ ConstPointFunctions.filter_intersected()
 
 α, β, img = rendergeodesics(
     m,
@@ -24,8 +27,8 @@ pf = ConstPointFunctions.redshift(m, x) ∘ ConstPointFunctions.filter_intersect
     image_height = 800,
     verbose = true,
     pf = pf,
-    # minrₑ = Gradus.isco(m) + 1e-2,
-    # maxrₑ = 30.0,
+    # filter out the phantom image inside the shadow
+    callback = domain_upper_hemisphere()
 )
 
 heatmap(α, β, img, aspect_ratio = 1, colour = :gist_rainbow, title = "Eddington ratio 10%")
