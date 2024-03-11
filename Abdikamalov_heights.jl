@@ -92,9 +92,6 @@ INCLINATION = 70.0
 # check for β = 2
 KWARGS = (; β₀ = 2)
 
-################## negative α13
-
-
 m_n1 = JohannsenMetric(M = 1.0, a = 0.9, α13 = -0.35, ϵ3 = 0.0)
 model5 = LampPostModel(h = 9.5)
 data_n1 = run_all_parameter_combinations(m_n1, INCLINATION, model5, bins; KWARGS...)
