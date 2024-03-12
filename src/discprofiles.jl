@@ -1,4 +1,5 @@
 using Gradus, Plots, Printf
+using LaTeXStrings
 r_start=-50
 r_end=50
 n=r_end-r_start
@@ -41,15 +42,15 @@ function disk_height(m)
 end
 
 function plot_data(dx_at,dx_ab,dx_bt,dx_bb,dx_ct,dx_cb)
-    p=plot(r,[dx_ct],fillrange=dx_cb,label="Ṁ / Ṁedd = 0.3", color = :darkorchid1 ,fillcolor = :darkorchid1, xlabel="radius",ylabel="height")
-    plot!(r,dx_bt,fillrange=dx_bb,label="Ṁ / Ṁedd = 0.2", color = :hotpink2, fillcolor = :hotpink2)
-    plot!(r,dx_at,fillrange=dx_ab, label="Ṁ / Ṁedd = 0.1", color = :tan1, fillcolor = :tan1)
+    p=plot(r,[dx_ct],fillrange=dx_cb,label=L"\dot{M} / \dot{M}_{\textrm{Edd}} = 0.3", color = :darkorchid1 ,fillcolor = :darkorchid1, xlabel=L"\textrm{Radius~} (GM/c^2)",ylabel=L"\textrm{Height~} (GM/c^2)")
+    plot!(r,dx_bt,fillrange=dx_bb,label=L"\dot{M} / \dot{M}_\textrm{Edd} = 0.2", color = :hotpink2, fillcolor = :hotpink2)
+    plot!(r,dx_at,fillrange=dx_ab, label=L"\dot{M} / \dot{M}_\textrm{Edd} = 0.1", color = :tan1, fillcolor = :tan1)
     x=zeros(100)
-    plot!(r,x,label="Ṁ / Ṁedd = 0.0",color=:white)
+    plot!(r,x,label=L"\dot{M} / \dot{M}_\textrm{Edd} = 0.0",color=:white)
     return p
 end  
 #a=0.0 α13=0.35
 m1_a=JohannsenMetric(M=1.0,a=0.0,α13=0.0,ϵ3=0.0)
 d1_at,d1_ab,d1_bt,d1_bb,d1_ct,d1_cb=disk_height(m1_a)
 plot_data(d1_at,d1_ab,d1_bt,d1_bb,d1_ct,d1_cb)
-plot_horizon!(m1_a, color = :black, label = "horizon")
+plot_horizon!(m1_a, color = :black, label = L"\textrm{Horizon}")
