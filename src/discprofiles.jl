@@ -44,6 +44,8 @@ function plot_data(dx_at,dx_ab,dx_bt,dx_bb,dx_ct,dx_cb)
     p=plot(r,[dx_ct],fillrange=dx_cb,label="Ṁ / Ṁedd = 0.3", color = :darkorchid1 ,fillcolor = :darkorchid1, xlabel="radius",ylabel="height")
     plot!(r,dx_bt,fillrange=dx_bb,label="Ṁ / Ṁedd = 0.2", color = :hotpink2, fillcolor = :hotpink2)
     plot!(r,dx_at,fillrange=dx_ab, label="Ṁ / Ṁedd = 0.1", color = :tan1, fillcolor = :tan1)
+    x=zeros(100)
+    plot!(r,x,label="Ṁ / Ṁedd = 0.0",color=:white)
     return p
 end  
 #a=0.0 α13=0.35
