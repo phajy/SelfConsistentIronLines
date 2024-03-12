@@ -78,7 +78,7 @@ end
 
 function plot_all(data)
     incl_text = Printf.@sprintf " θ=%0.f h=%.3f" data.θ data.h
-    p = plot(title = _format_metric(data.metric) * incl_text, legend = :topleft)
+    p = plot(title = _format_metric(data.metric) * incl_text, legend = :topleft, xlabel = "Energy (keV)", ylabel = "Flux (arbitrary units)")
     for (edd, f) in zip((0, 10, 20, 30), data.f)
         plot!(p, data.bins, f, label = _format_label(edd))
     end
