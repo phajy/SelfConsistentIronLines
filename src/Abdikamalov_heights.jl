@@ -2,11 +2,10 @@ using Gradus
 using Plots
 using Printf
 using LaTeXStrings
+using Plots.PlotMeasures
 
-_format_metric(m::JohannsenMetric) = Printf.@sprintf "a=%.3f, α13=%.2f" m.a m.α13
-_format_metric(m::KerrMetric) = Printf.@sprintf "a=%.3f" m.a
-
-_format_label(edd) = Printf.@sprintf L"\dot{M} / \dot{N}_\textrm{Eedd} = %.1f" (edd / 100)
+_format_metric(m::JohannsenMetric) = Printf.@sprintf "a=%.2f, α13=%.2f" m.a m.α13
+_format_metric(m::KerrMetric) = Printf.@sprintf "a=%.2f" m.a
 
 function calculate_line_profile(m, x, d, prof, bins; kwargs...)
     _, f = lineprofile(
@@ -78,10 +77,11 @@ function run_all_parameter_combinations(m, θ, model, bins; kwargs...)
 end
 
 function plot_all(data)
-    incl_text = Printf.@sprintf " θ=%0.f h=%.3f" data.θ data.h
-    p = plot(title = _format_metric(data.metric) * incl_text, legend = :topleft, xlabel = "Energy (keV)", ylabel = "Flux (arbitrary units)")
+    incl_text = Printf.@sprintf " θ=%0.f h=%.1f" data.θ data.h
+    p = plot(title = _format_metric(data.metric) * incl_text, legend = :topleft, xlabel = L"\textrm{Observed~frequency~shift~} (\nu_o / \nu_e)", ylabel = L"\testrm{Flux~(arbitrary~units)")
     for (edd, f) in zip((0, 10, 20, 30), data.f)
-        plot!(p, data.bins, f, label = _format_label(edd))
+        label_string = L"\dot{M} / \dot{N}_\textrm{Eedd} = " * string(edd / 100)
+        plot!(p, data.bins, f, label = label_string)
     end
     p
 end
@@ -116,6 +116,5 @@ pn3 = plot_all(data_n3)
 display(pn3)
 
 
-
 # put everything together
-plot(pn1, pn2, pn3, layout = grid(1, 3, heights=[0.3]), size = (1000, 1000))
+plot(pn1, pn2, pn3, layout = grid(1, 3, heights=[0.3]), size = (1200, 1200), left_margin = [5mm 0mm], right_margin = [5mm 0mm])
