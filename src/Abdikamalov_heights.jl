@@ -1,11 +1,12 @@
 using Gradus
 using Plots
 using Printf
+using LaTeXStrings
 
 _format_metric(m::JohannsenMetric) = Printf.@sprintf "a=%.3f, α13=%.2f" m.a m.α13
 _format_metric(m::KerrMetric) = Printf.@sprintf "a=%.3f" m.a
 
-_format_label(edd) = Printf.@sprintf "Ṁ / Ṁedd = %.1f" (edd / 100)
+_format_label(edd) = Printf.@sprintf L"\dot{M} / \dot{N}_\textrm{Eedd} = %.1f" (edd / 100)
 
 function calculate_line_profile(m, x, d, prof, bins; kwargs...)
     _, f = lineprofile(
@@ -117,6 +118,4 @@ display(pn3)
 
 
 # put everything together
-plot(pn1, pn2, pn3, layout = grid(1, 3), size = (3000, 1000))
-
-
+plot(pn1, pn2, pn3, layout = grid(1, 3, heights=[0.3]), size = (1000, 1000))
