@@ -80,7 +80,7 @@ function plot_all(data)
     incl_text = Printf.@sprintf " θ=%0.f h=%.1f" data.θ data.h
     p = plot(title = _format_metric(data.metric) * incl_text, legend = :topleft, xlabel = L"\textrm{Observed~frequency~shift~} (\nu_o / \nu_e)", ylabel = L"\testrm{Flux~(arbitrary~units)")
     for (edd, f) in zip((0, 10, 20, 30), data.f)
-        label_string = L"\dot{M} / \dot{N}_\textrm{Eedd} = " * string(edd / 100)
+        label_string = L"\dot{M} / \dot{N}_\textrm{edd} = " * string(edd / 100)
         plot!(p, data.bins, f, label = label_string)
     end
     p
